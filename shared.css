@@ -2003,3 +2003,166 @@ body { background: var(--page-bg); font-family: 'Open Sans', sans-serif; color: 
   /* Narrative inset box */
   .narrative-inset { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); color: #b8afa4; }
 }
+
+/* ===== GLOSSARY BACKDROP ===== */
+/* Used by: activity pages that use shared.js toggleGlossary() */
+.glossary-backdrop { position: fixed; inset: 0; z-index: 199; display: none; }
+.glossary-backdrop.open { display: block; }
+
+/* ===== GLOSSARY ITEMS (rendered by shared.js renderGlossary) ===== */
+.glossary-item { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.glossary-item:last-child { border-bottom: none; }
+.glossary-item.hidden { display: none; }
+.glossary-term { font-family: Inter, sans-serif; font-size: var(--font-s); font-weight: 700; color: var(--primary); margin-bottom: 3px; }
+.glossary-def  { font-family: 'Open Sans', sans-serif; font-size: var(--font-s); color: #555; line-height: 1.6; }
+
+/* ===== GETTING ORGANIZED ACTIVITY (Module-1/01-getting-organized-redesign.html) ===== */
+
+/* Screen content wrappers */
+.screen-content      { max-width: 720px;  margin: 0 auto; padding: 24px 20px 60px; }
+.screen-content-wide { max-width: 1020px; margin: 0 auto; padding: 24px 20px 60px; }
+@media (max-width: 640px) { .screen-content, .screen-content-wide { padding: 16px 14px 48px; } }
+
+/* Two-column source + zones layout for list1-sort */
+.sort-source-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; align-items: start; }
+@media (max-width: 640px) { .sort-source-layout { grid-template-columns: 1fr; } }
+
+/* DnD item with inline ⓘ info button */
+.dnd-item-wrap { margin-bottom: 5px; }
+.dnd-item-row  { display: flex; align-items: center; gap: 4px; }
+.dnd-item-row .dnd-card { flex: 1; margin-bottom: 0; font-size: var(--font-xs); padding: 6px 10px; }
+.dnd-info-btn  { background: none; border: none; cursor: pointer; font-size: var(--font-xs); color: #bbb; padding: 2px 4px; line-height: 1; flex-shrink: 0; border-radius: 3px; transition: color 0.15s; }
+.dnd-info-btn:hover { color: var(--accent); }
+.dnd-info-btn.open  { color: var(--accent); }
+.dnd-info-panel { font-size: var(--font-xs); font-style: italic; color: #666; line-height: 1.5; background: var(--warn-bg); border-left: 2px solid var(--accent); padding: 5px 8px; margin-top: 2px; border-radius: 0 4px 4px 0; display: none; }
+.dnd-info-panel.open { display: block; }
+
+/* Placed chips with success styling (list1 autocomplete result) */
+.placed-chip-ok { padding: 3px 9px; border-radius: 4px; font-size: var(--font-xs); font-family: Inter, sans-serif; font-weight: 600; background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+
+/* System-sort animation */
+@keyframes systemPulse { 0%,100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.02); } }
+.sorting-beat { animation: systemPulse 1.2s ease-in-out infinite; }
+.sorting-beat-banner { background: var(--primary); color: white; border-radius: 10px; padding: 16px 20px; text-align: center; margin-bottom: 14px; font-family: Inter, sans-serif; }
+.sorting-beat-banner p { margin: 0; }
+.sorting-beat-title { font-size: var(--font-m); font-weight: 700; color: white; margin-bottom: 4px; }
+.sorting-beat-sub   { font-size: var(--font-xs); color: rgba(255,255,255,0.8); }
+
+/* Trigger affordance box */
+.trigger-box { background: var(--warn-bg); border: 1px solid var(--warn-border); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
+.trigger-box p { font-size: var(--font-m); color: var(--warn-text); line-height: 1.65; margin-bottom: 10px; font-family: Inter, sans-serif; }
+
+/* Progress-toward-trigger checklist */
+.sort-trigger-hint { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
+.sort-trigger-hint-title { font-size: var(--font-s); font-weight: 700; color: var(--primary); margin-bottom: 8px; font-family: Inter, sans-serif; }
+.sort-trigger-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.sort-trigger-list li { display: flex; gap: 8px; font-size: var(--font-xs); color: #666; font-family: Inter, sans-serif; line-height: 1.5; }
+.sort-trigger-list li.done { color: var(--success-text); }
+.sort-trigger-check { flex-shrink: 0; font-weight: 700; min-width: 12px; }
+
+/* Scenario click-to-reveal cards */
+.scenario-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; }
+.scenario-card-label { font-size: var(--font-s); font-weight: 700; color: var(--primary); margin-bottom: 6px; font-family: Inter, sans-serif; }
+.scenario-card-text  { font-size: var(--font-m); color: #374151; line-height: 1.65; }
+.scenario-reveal-btn { display: block; width: 100%; text-align: left; background: white; border: 1.5px solid var(--primary); border-radius: 10px; padding: 14px 18px; font-family: Inter, sans-serif; font-size: var(--font-m); font-weight: 600; color: var(--primary); cursor: pointer; transition: background 0.15s; margin-bottom: 10px; }
+.scenario-reveal-btn:hover { background: var(--primary-faint); }
+.scenario-locked { background: var(--primary-faint); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; font-size: var(--font-m); color: #aaa; margin-bottom: 10px; font-style: italic; }
+
+/* Welcome / Complete — simple icon lists */
+.icon-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.icon-list li { display: flex; gap: 10px; font-size: var(--font-m); color: #374151; line-height: 1.55; font-family: Inter, sans-serif; }
+.icon-list li .il-icon { flex-shrink: 0; font-weight: 700; }
+.icon-list li .il-icon.accent { color: var(--accent); }
+.icon-list li .il-icon.success { color: var(--success-text); }
+
+@media (prefers-color-scheme: dark) {
+  /* Glossary items */
+  .glossary-term { color: var(--primary); }
+  .glossary-def  { color: #b0aec0; }
+  .glossary-item { border-bottom-color: var(--border); }
+
+  /* DnD info button/panel */
+  .dnd-info-btn  { color: #4a4858; }
+  .dnd-info-btn:hover, .dnd-info-btn.open { color: var(--accent); }
+  .dnd-info-panel { background: var(--warn-bg); border-left-color: var(--accent); color: var(--warn-text); }
+  .dnd-item-row .dnd-card { background: #3e3c48; border-color: var(--border); color: #c8ccd8; }
+
+  /* Placed chip */
+  .placed-chip-ok { background: var(--success-bg); color: var(--success-text); border-color: var(--success-border); }
+
+  /* Sorting banner */
+  .sorting-beat-banner { background: var(--primary); }
+
+  /* Trigger box */
+  .trigger-box { background: var(--warn-bg); border-color: var(--warn-border); }
+  .trigger-box p { color: var(--warn-text); }
+
+  /* Sort trigger hint */
+  .sort-trigger-hint { background: #32303c; border-color: var(--border); }
+  .sort-trigger-hint-title { color: var(--primary); }
+  .sort-trigger-list li { color: #8a8898; }
+  .sort-trigger-list li.done { color: var(--success-text); }
+
+  /* Scenario cards */
+  .scenario-card { background: #32303c; border-color: var(--border); }
+  .scenario-card-label { color: var(--primary); }
+  .scenario-card-text  { color: #b0aec0; }
+  .scenario-reveal-btn { background: #32303c; border-color: var(--primary); color: var(--primary); }
+  .scenario-reveal-btn:hover { background: var(--primary-faint); }
+  .scenario-locked { background: #28262e; border-color: var(--border); color: #4a4858; }
+
+  /* Icon lists */
+  .icon-list li { color: #b0aec0; }
+}
+
+/* ===== EXCEL-SPREADSHEET DESTINATION (01-getting-organized-redesign.html) ===== */
+.xl-sheet { border: 2px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); transition: border-color 0.15s; }
+.xl-sheet.drag-over { border-color: #217346; }
+.xl-toolbar { background: #f1f5f9; border-bottom: 1px solid var(--border); padding: 6px 12px; display: flex; justify-content: space-between; align-items: center; font-family: Inter, sans-serif; font-size: var(--font-xs); color: #555; }
+.xl-toolbar-title { font-weight: 600; }
+.xl-col-head-row { display: grid; grid-template-columns: 28px 1fr; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+.xl-col-num-head { border-right: 1px solid #e2e8f0; min-height: 24px; }
+.xl-col-label { font-size: var(--font-xs); font-weight: 600; padding: 4px 8px; color: #374151; font-family: Inter, sans-serif; }
+.xl-row { display: grid; grid-template-columns: 28px 1fr; border-bottom: 1px solid #e2e8f0; min-height: 30px; }
+.xl-row-num { background: #f8fafc; border-right: 1px solid #e2e8f0; font-size: 11px; color: #9ca3af; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; flex-shrink: 0; }
+.xl-row-cell { font-size: var(--font-s); padding: 5px 8px; display: flex; align-items: center; justify-content: space-between; color: #374151; font-family: Inter, sans-serif; background: white; min-height: 30px; gap: 6px; }
+.xl-remove-btn { background: none; border: none; cursor: pointer; font-size: 12px; color: var(--error-text); padding: 0 2px; opacity: 0.65; flex-shrink: 0; line-height: 1; }
+.xl-remove-btn:hover { opacity: 1; }
+.xl-tab-strip { background: #f1f5f9; border-top: 1px solid var(--border); padding: 0 8px; display: flex; align-items: flex-end; min-height: 28px; }
+.xl-tab { padding: 5px 14px; font-size: var(--font-xs); font-family: Inter, sans-serif; font-weight: 600; color: #217346; background: white; border-top: 2px solid #217346; border-radius: 2px 2px 0 0; }
+.xl-tab-add { padding: 5px 10px; font-size: var(--font-xs); color: #9ca3af; cursor: default; }
+
+/* ===== SORT HELPER MESSAGE ===== */
+.sort-helper { padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: var(--font-m); line-height: 1.6; font-family: Inter, sans-serif; }
+.sort-helper.info { background: white; border: 1px solid var(--border); color: #374151; }
+.sort-helper.warn { background: var(--error-bg); border: 1px solid var(--error-border); color: var(--error-text); }
+.sort-helper.ok   { background: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-text); }
+
+/* ===== LOCATION SOURCE PANELS ===== */
+.location-panel { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.location-panel-label { font-size: var(--font-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; margin-bottom: 8px; font-family: Inter, sans-serif; }
+.location-panel-empty { font-size: var(--font-xs); font-style: italic; color: #9ca3af; padding: 4px 0; }
+
+@media (prefers-color-scheme: dark) {
+  /* Excel sheet */
+  .xl-sheet { border-color: var(--border); }
+  .xl-sheet.drag-over { border-color: #22c55e; }
+  .xl-toolbar { background: #28262e; border-bottom-color: var(--border); color: #8a8898; }
+  .xl-col-head-row { background: #2a2830; border-bottom-color: var(--border); }
+  .xl-col-num-head { border-right-color: var(--border); }
+  .xl-col-label { color: #c8ccd8; }
+  .xl-row { border-bottom-color: var(--border); }
+  .xl-row-num { background: #2a2830; border-right-color: var(--border); color: #4a4858; }
+  .xl-row-cell { background: #32303c; color: #c8ccd8; }
+  .xl-tab-strip { background: #28262e; border-top-color: var(--border); }
+  .xl-tab { background: #3e3c48; color: #22c55e; border-top-color: #22c55e; }
+  .xl-tab-add { color: #4a4858; }
+  /* Sort helper */
+  .sort-helper.info { background: #32303c; border-color: var(--border); color: #c8ccd8; }
+  .sort-helper.warn { background: rgba(220,38,38,0.12); border-color: rgba(220,38,38,0.35); color: #f87171; }
+  .sort-helper.ok   { background: var(--success-bg); border-color: var(--success-border); color: var(--success-text); }
+  /* Location panels */
+  .location-panel { background: #32303c; border-color: var(--border); }
+  .location-panel-label { color: #4a4858; }
+  .location-panel-empty { color: #4a4858; }
+}

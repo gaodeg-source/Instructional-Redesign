@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Tutorial 1.1: Getting Organized</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared.css">
+</head>
+<body>
+<div class="page">
+  <div class="content content-standalone">
+
+    <!-- ===== PERSISTENT ACTIVITY HEADER ===== -->
+    <div id="headerWrap">
+      <div class="screen-content" style="padding-bottom:0;">
+        <div class="activity-header">
+          <div class="activity-header-top">
+            <div onclick="headerClick()" style="cursor:pointer;">
+              <div class="activity-header-title">Tutorial 1.1: Getting Organized</div>
+              <div class="activity-header-sub">A side activity becomes a thing &middot; ~10 min</div>
+            </div>
+            <div class="activity-header-btns">
+              <a href="../index.html" class="activity-header-btn" title="Return to Main" aria-label="Return to Main">&#127968;</a>
+              <button class="activity-header-btn" onclick="toggleGlossary()" title="Glossary" aria-label="Open glossary">&#128218;</button>
+              <button class="activity-header-btn" onclick="restartActivity()" title="Restart" aria-label="Restart tutorial">&#8635;</button>
+            </div>
+          </div>
+          <div class="activity-header-progress">
+            <div class="activity-header-progress-row">
+              <span>Progress</span><span id="actProgressPct">0%</span>
+            </div>
+            <div class="activity-header-bar">
+              <div class="activity-header-fill" id="actProgressFill" style="width:0%;"></div>
+            </div>
+          </div>
+          <div id="devPanel" style="display:none; margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.2);">
+            <div style="font-size:11px; color:rgba(255,255,255,0.7); margin-bottom:6px;">Dev: skip to phase</div>
+            <div style="display:flex; flex-wrap:wrap; gap:4px;" id="devButtons"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SCREEN: WELCOME ===== -->
+    <div class="screen active" id="screen-welcome">
+      <div class="screen-content">
+        <div class="narrative-block">
+          <p>You have a <strong>day job</strong>. In your free time you fix bikes &mdash; for friends, then friends of friends. You&rsquo;re good at it, and word gets around.</p>
+          <p style="margin-top:10px;">It grew. Enough that when the gear took over your apartment, you <strong>rented a small space</strong> nearby to work out of. But the repair work is still tangled up with the rest of your life &mdash; and this week, that started to cause problems.</p>
+        </div>
+        <div class="section-card" style="margin-bottom:18px;">
+          <div class="subsection-head">What you&rsquo;ll discover</div>
+          <ul class="icon-list">
+            <li><span class="il-icon accent">&rarr;</span><span>Why a little success forces you to get organized</span></li>
+            <li><span class="il-icon accent">&rarr;</span><span>The first line you draw &mdash; and what it&rsquo;s really about</span></li>
+            <li><span class="il-icon accent">&rarr;</span><span>How your repair work starts to become its own thing</span></li>
+          </ul>
+        </div>
+        <button class="btn-continue" style="width:100%; justify-content:center;" onclick="playContinueClick(); goToPhase('scenarios');">Begin &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ===== SCREEN: SCENARIOS ===== -->
+    <div class="screen" id="screen-scenarios">
+      <div class="screen-content">
+        <div class="narrative-block">
+          <p>Three things happened this week. None of them went smoothly.</p>
+        </div>
+        <div id="scenariosList"></div>
+        <div id="scenariosContinue" style="display:none;">
+          <div class="mcq-fb show ok" style="margin-bottom:14px;">Three different moments, one realization: it&rsquo;s too much to keep in your head. If you&rsquo;re going to get a grip on this, the first step is to write down <strong>what you&rsquo;ve got</strong>.</div>
+          <button class="btn-continue" style="width:100%; justify-content:center;" onclick="playContinueClick(); goToPhase('sort');">Start the list &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SCREEN: SORT ===== -->
+    <div class="screen" id="screen-sort">
+      <div class="screen-content">
+        <div class="narrative-block">
+          <p>Your stuff is in two places: the <strong>rented space</strong> you work out of, and your <strong>home</strong>. You open a spreadsheet to start a tab &mdash; <strong>Things</strong> &mdash; and go to fill it.</p>
+          <p style="margin-top:8px; font-size:var(--font-s); color:#666;">Drag (or tap) into the <strong>Things</strong> tab only what belongs to <em>the repair work</em>. Leave everything else where it is. Use <strong style="color:var(--accent);">&#9432;</strong> if you&rsquo;re not sure what something is.</p>
+        </div>
+
+        <!-- Source panels: two locations -->
+        <div class="sort-source-layout" id="sortLocationGrid">
+          <div class="location-panel" id="panelRented">
+            <div class="location-panel-label">At the rented space</div>
+            <div id="sourceRented"></div>
+          </div>
+          <div class="location-panel" id="panelHome">
+            <div class="location-panel-label">At home</div>
+            <div id="sourceHome"></div>
+          </div>
+        </div>
+
+        <!-- Excel spreadsheet destination -->
+        <div class="xl-sheet" id="xlSheet"
+             ondragover="event.preventDefault(); this.classList.add('drag-over');"
+             ondragleave="this.classList.remove('drag-over');"
+             ondrop="this.classList.remove('drag-over'); handleDrop(event);">
+          <div class="xl-toolbar">
+            <span class="xl-toolbar-title">&#128202; Bike-Repair.xlsx</span>
+            <span id="xlDropHint" style="font-style:italic;">drop here &rarr;</span>
+          </div>
+          <div class="xl-col-head-row">
+            <div class="xl-col-num-head"></div>
+            <div class="xl-col-label">A &nbsp;&nbsp;Things related to your repair work</div>
+          </div>
+          <div id="xlRows"></div>
+          <div class="xl-tab-strip">
+            <div class="xl-tab">Things</div>
+            <div class="xl-tab-add">&#65291;</div>
+          </div>
+        </div>
+
+        <!-- Sort helper message -->
+        <div class="sort-helper info" id="sortHelper">Keep going &mdash; pull the repair things into the tab.</div>
+
+        <!-- Do the rest button -->
+        <button class="btn-continue" id="doTheRestBtn"
+                onclick="doTheRest();" disabled
+                style="width:100%; justify-content:center; opacity:0.55; cursor:not-allowed;"
+                title="Finish finding the repair things first">Do the rest &rarr;</button>
+      </div>
+    </div>
+
+    <!-- ===== SCREEN: REFLECT ===== -->
+    <div class="screen" id="screen-reflect">
+      <div class="screen-content">
+        <div class="narrative-block">
+          <p>You filled the <strong>Things</strong> tab from both places, and left a lot behind. You drew a line. What is the line actually about?</p>
+        </div>
+        <div class="mc-card">
+          <div class="mc-q">Which best describes what ended up on the Things tab?</div>
+          <div class="mc-opts" id="q1Opts"></div>
+          <div class="mcq-fb" id="q1Feedback" style="display:none;"></div>
+          <div id="q1ExplainWrap" style="display:none;">
+            <div class="mcq-fb" style="background:var(--warn-bg); color:var(--warn-text); border:1px solid var(--warn-border); margin-top:10px;" id="q1Explain"></div>
+          </div>
+        </div>
+        <div id="q1Insight" style="display:none; margin-top:14px;">
+          <div class="insight-box">
+            <div class="insight-label">&#128161; The line you drew</div>
+            <p>You drew a line: things related to the repair work go in &mdash; wherever they sit, whatever their job &mdash; and everything else stays out. Not where it is, not what it&rsquo;s used for, not who &ldquo;owns&rdquo; it. Just: <strong>is this part of the repair work, or not?</strong> Nobody taught you to draw it. You did it because the work had become its own thing, and you needed to see it clearly.</p>
+          </div>
+          <button class="btn-continue" style="width:100%; justify-content:center; margin-top:14px;" onclick="playContinueClick(); goToPhase('complete');">Continue &rarr;</button>
+        </div>
+        <div id="q1SubmitWrap" style="margin-top:14px;">
+          <button class="btn-continue" id="q1SubmitBtn" onclick="submitQ1();" disabled style="width:100%; justify-content:center;">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SCREEN: COMPLETE ===== -->
+    <div class="screen" id="screen-complete">
+      <div class="screen-content">
+        <div style="text-align:center; margin-bottom:24px;">
+          <div style="font-size:52px; line-height:1; margin-bottom:8px;">&#127942;</div>
+          <div style="font-family:Inter,sans-serif; font-size:var(--font-xlg); font-weight:700; color:var(--primary);">Tutorial 1.1 complete</div>
+        </div>
+
+        <div class="section-card" style="margin-bottom:18px;">
+          <div class="subsection-head">What you discovered</div>
+          <ul class="icon-list">
+            <li><span class="il-icon success">&#10003;</span><span>A little success made it impossible to keep the repair work in your head.</span></li>
+            <li><span class="il-icon success">&#10003;</span><span>Sorting your stuff, you drew a line &mdash; <strong>related to the repair work, or not</strong>.</span></li>
+            <li><span class="il-icon success">&#10003;</span><span>That line isn&rsquo;t about <em>where</em> things are or <em>what</em> they&rsquo;re used for. It&rsquo;s about what belongs to the work.</span></li>
+          </ul>
+        </div>
+
+        <div class="insight-box" style="margin-bottom:18px;">
+          <div class="insight-label">&#128161; The deeper point</div>
+          <p>The very first thing <em>anyone who runs anything</em> does &mdash; from a one-person bike shop to the largest company on earth &mdash; is decide what&rsquo;s inside it and what&rsquo;s outside. You just did it by hand, sorting a pile of stuff, without being taught. Hold onto that line; everything else builds on it.</p>
+        </div>
+
+        <div class="info-box" style="margin-bottom:18px;">
+          <strong>Coming next &mdash; 1.2: Insurance and Maria</strong>
+          <p style="margin-top:6px;">That fire two blocks over wasn&rsquo;t nothing. You call an insurance agent &mdash; and her form wants a <strong>dollar value</strong> next to every item on your Things tab.</p>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="12-insurance-and-maria.html" class="btn-continue" style="text-decoration:none;">Next: 1.2 &rarr;</a>
+          <button class="btn-reset" onclick="restartActivity();">&#8635; Restart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== GLOSSARY OVERLAY (powered by shared.js) ===== -->
+    <div id="glossaryBackdrop" class="glossary-backdrop" onclick="toggleGlossary()"></div>
+    <div id="glossaryOverlay" class="glossary-overlay" onclick="toggleGlossary()">
+      <div class="glossary-panel" onclick="event.stopPropagation()">
+        <div class="glossary-panel-head">
+          <span class="glossary-panel-title">&#128218; Glossary</span>
+          <button class="glossary-close-btn" onclick="toggleGlossary()" aria-label="Close glossary">&times;</button>
+        </div>
+        <div class="glossary-search-wrap">
+          <input type="text" id="glossarySearchInput" placeholder="Search terms&hellip;" oninput="filterGlossary(this.value)" autocomplete="off">
+        </div>
+        <div class="glossary-scroll">
+          <div id="glossaryList"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.content -->
+</div><!-- /.page -->
+
+<script src="../config.js"></script>
+<script src="../shared.js"></script>
+<script>
+// ============================================================
+//  Tutorial 1.1: Getting Organized — vanilla JS
+//  @version 2.0  @date 2026-06-01
+// ============================================================
+
+// ===== SOUND =====
+var _audioCtx = null;
+function _ac() {
+  if (!_audioCtx) { try { _audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){} }
+  return _audioCtx;
+}
+function _tone(f, d, type, v) {
+  type = type || 'sine'; v = v || 0.05;
+  var c = _ac(); if (!c) return;
+  var o = c.createOscillator(), g = c.createGain();
+  o.type = type; o.frequency.value = f;
+  o.connect(g); g.connect(c.destination);
+  g.gain.setValueAtTime(v, c.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + d);
+  o.start(); o.stop(c.currentTime + d);
+}
+function playContinueClick() { _tone(330, 0.08, 'sine', 0.04); }
+function playSuccessTone()   { _tone(523, 0.12); setTimeout(function(){ _tone(784, 0.16); }, 110); }
+function playSoftNope()      { _tone(180, 0.16, 'sine', 0.05); }
+function playBuzzer()        { _tone(120, 0.3,  'square', 0.05); }
+function playPlace()         { _tone(440, 0.06, 'sine', 0.04); }
+
+
+// ===== DATA =====
+var rentedSpaceItems = [
+  { id:'stand',     text:'Park Tool repair stand',  zone:'shop',     isIntruder:false, info:'Anchored to the workbench. Every repair starts here.' },
+  { id:'compressor',text:'Air compressor',           zone:'shop',     isIntruder:false, info:'In the back corner. Runs the impact tools and seats tires.' },
+  { id:'washer',    text:'Parts washer',             zone:'shop',     isIntruder:false, info:'By the back door. A solvent bath for greasy parts.' },
+  { id:'truing',    text:'Wheel-truing stand',       zone:'shop',     isIntruder:false, info:'On a side bench. Holds a wheel so you can tweak the spokes true.' },
+  { id:'grinder',   text:'Bench grinder',            zone:'shop',     isIntruder:false, info:'On a side bench. For sharpening and small metal work.' },
+  { id:'headset',   text:'Headset press',            zone:'shop',     isIntruder:false, info:'On the workbench. For pressing in bearing cups.' },
+  { id:'vacuum',    text:'Shop vacuum',              zone:'shop',     isIntruder:false, info:'Under the bench. For metal shavings and shop dust.' },
+  { id:'conewr',    text:'Cone wrench set',          zone:'shop',     isIntruder:false, info:'On the pegboard. For hub cones.' },
+  { id:'torque',    text:'Torque wrench',            zone:'shop',     isIntruder:false, info:'In the tool drawer. For careful bolt tightening.' },
+  { id:'hexset',    text:'Hex / Allen key set',      zone:'shop',     isIntruder:false, info:'In the tool drawer. For pretty much every bike bolt.' },
+  { id:'cutters',   text:'Cable cutters',            zone:'shop',     isIntruder:false, info:'On the pegboard. For trimming brake and shift cables.' },
+  { id:'breaker',   text:'Chain breaker',            zone:'shop',     isIntruder:false, info:'In the tool drawer. For installing and removing chains.' },
+  { id:'levers',    text:'Tire levers',              zone:'shop',     isIntruder:false, info:'In the tool drawer. For prying tires off rims.' },
+  { id:'shelves',   text:'Shelving units',           zone:'shop',     isIntruder:false, info:'Along the back wall. Holds the parts stock.' },
+  { id:'display',   text:'Display rack',             zone:'shop',     isIntruder:false, info:'By the front door. Tubes and small items.' },
+  { id:'pegboard',  text:'Pegboard + hooks',         zone:'shop',     isIntruder:false, info:'Over the workbench. Keeps the hand tools in reach.' },
+  { id:'chains',    text:'Box of chains',            zone:'shop',     isIntruder:false, info:'On the supply shelf. Various speeds.' },
+  { id:'pads',      text:'Box of brake pads',        zone:'shop',     isIntruder:false, info:'On the supply shelf. Rim and disc.' },
+  { id:'cassettes', text:'Cassettes',                zone:'shop',     isIntruder:false, info:'On the supply shelf. A few common ratios.' },
+  { id:'bbs',       text:'Bottom brackets',          zone:'shop',     isIntruder:false, info:'On the supply shelf. Assorted sizes.' },
+  { id:'spokes',    text:'Spokes',                   zone:'shop',     isIntruder:false, info:'In a bin by the truing stand.' },
+  { id:'tubes',     text:'Tubes',                    zone:'shop',     isIntruder:false, info:'On the supply shelf. The thing everyone needs.' },
+  { id:'drawer',    text:'Cash drawer',              zone:'shop',     isIntruder:false, info:'A wooden box on the bench — where you keep cash to make change for customers. You don’t repair anything with it.' },
+  { id:'guitar',    text:'Acoustic guitar',          zone:'personal', isIntruder:true,  info:'In the corner by the door. You play when things are slow.' },
+  { id:'photos',    text:'Family photos',            zone:'personal', isIntruder:true,  info:'Taped over the workbench. From the kid’s birthday.' },
+  { id:'commuter',  text:'Your commuter bike',       zone:'personal', isIntruder:true,  info:'Up on the stand — your own daily ride, in to fix its rear wheel.' }
+];
+
+var homeItems = [
+  { id:'couch',    text:'Couch',                    zone:'personal', isIntruder:false, info:'In the living room. Where you collapse at night.' },
+  { id:'coffee',   text:'Coffee maker',             zone:'personal', isIntruder:false, info:'On the kitchen counter.' },
+  { id:'tv',       text:'TV',                       zone:'personal', isIntruder:false, info:'In the living room. For unwinding.' },
+  { id:'books',    text:'Books on the shelf',       zone:'personal', isIntruder:false, info:'Novels, mostly, plus a few bike manuals.' },
+  { id:'desk',     text:'Desk',                     zone:'shop',     isIntruder:true,  info:'In the corner of the living room — where you sit with the laptop to order parts and total up the month.' },
+  { id:'laptop',   text:'Laptop',                   zone:'shop',     isIntruder:true,  info:'On the desk. You order parts, look up manuals, and schedule repairs on it.' },
+  { id:'receipts', text:'Box of customer receipts', zone:'shop',     isIntruder:true,  info:'On the desk. Paperwork from last month’s repairs.' },
+  { id:'cables',   text:'Box of derailleur cables', zone:'shop',     isIntruder:true,  info:'In the entryway. UPS dropped them here instead of at the space.' }
+];
+
+var allItems = rentedSpaceItems.concat(homeItems);
+var shopIds = allItems.filter(function(i){ return i.zone === 'shop'; }).map(function(i){ return i.id; });
+var homeIntruderIds = homeItems.filter(function(i){ return i.isIntruder; }).map(function(i){ return i.id; });
+
+var scenariosData = [
+  { label: 'A customer asks',
+    content: 'A customer rolls in with a broken derailleur. “Got a 24mm cone wrench? I left mine at home.” You think you do — somewhere in that toolbox under the bench, or maybe the drawer. You start digging.' },
+  { label: 'It’s not all in your head anymore',
+    content: 'Tonight you unwrapped a chain whip you bought last week — and found another one already in the drawer, still in its package. Third time this month you’ve reordered something you already had. The “keep it all in your head” system isn’t working.' },
+  { label: 'What if something happened?',
+    content: 'A fire two blocks over last night gets you thinking: you should have insurance, and you don’t really know what’s at risk. The repair stand, the parts, all the tools, the laptop — it’s a lot, and you couldn’t list it from memory if you tried.' }
+];
+
+var q1Options = [
+  { id:'a', text:'Things related to your repair work' },
+  { id:'b', text:'Things you use for repairing bicycles' },
+  { id:'c', text:'Things in the rented space' },
+  { id:'d', text:'Things the business owns' }
+];
+var Q1_CORRECT = 'a';
+var q1OptionFeedback = {
+  b: 'Not quite. You don’t repair anything with the cash drawer — it just holds change for customers — yet it went in. It isn’t about what you use to fix bikes. Look again at what the things in the box have in common.',
+  c: 'Not quite. The laptop and the desk were sitting at home, not in the space — and your own commuter bike was right there in the space but stayed out. So it isn’t about where things are.',
+  d: 'Careful — there’s no separate “business” here yet. You own all of it: the stand, the laptop, the cash drawer, and the couch and your commuter bike too. “You own it” is just as true of the things you left out, so ownership can’t be the line. What the things in the box share is that they’re for your repair work.'
+};
+var q1FullAnswer = 'Things related to your repair work. The stand, the parts, the cash drawer, the laptop on your desk at home — all of it relates to the repair work, wherever it sits and whatever its job. The guitar, the couch, your own commuter bike — they don’t. That line is the most important thing you drew today.';
+
+
+// ===== STATE =====
+var phase = 'welcome';
+var phases = ['welcome', 'scenarios', 'sort', 'reflect', 'complete'];
+var scenariosRevealed = 1;
+var placed = {};       // id -> true (in Things tab)
+var draggedId = null;
+var expandedId = null;
+var sortDone = false;
+var q1Sel = null;
+var q1Attempts = 0;
+var q1Submitted = false;
+var q1LastWrong = null;
+var headerClickCount = 0;
+var devMode = false;
+
+
+// ===== UTILS =====
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+
+// ===== NAVIGATION =====
+function goToPhase(p) {
+  phase = p;
+  document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
+  var el = document.getElementById('screen-' + p);
+  if (el) el.classList.add('active');
+  updateProgress();
+  window.scrollTo(0, 0);
+  renderPhase(p);
+}
+
+function updateProgress() {
+  var idx = phases.indexOf(phase);
+  var pct = Math.round(idx / (phases.length - 1) * 100);
+  document.getElementById('actProgressFill').style.width = pct + '%';
+  document.getElementById('actProgressPct').textContent = pct + '%';
+}
+
+function renderPhase(p) {
+  if (p === 'scenarios') renderScenarios();
+  else if (p === 'sort') renderSort();
+  else if (p === 'reflect') renderQ1();
+}
+
+
+// ===== DEV MODE =====
+function headerClick() {
+  headerClickCount++;
+  if (headerClickCount >= 3) {
+    devMode = !devMode;
+    headerClickCount = 0;
+    renderDevPanel();
+  }
+}
+
+function renderDevPanel() {
+  var panel = document.getElementById('devPanel');
+  panel.style.display = devMode ? 'block' : 'none';
+  if (!devMode) return;
+  var wrap = document.getElementById('devButtons');
+  wrap.innerHTML = '';
+  phases.forEach(function(p) {
+    var b = document.createElement('button');
+    b.textContent = p;
+    b.style.cssText = [
+      'padding:3px 8px',
+      'border:none',
+      'border-radius:4px',
+      'cursor:pointer',
+      'font-size:11px',
+      'background:' + (p === phase ? 'white' : 'rgba(255,255,255,0.2)'),
+      'color:' + (p === phase ? 'var(--primary)' : 'white')
+    ].join(';');
+    b.onclick = function(){ goToPhase(p); renderDevPanel(); };
+    wrap.appendChild(b);
+  });
+}
+
+
+// ===== RESTART =====
+function restartActivity() {
+  playContinueClick();
+  phase = 'welcome';
+  scenariosRevealed = 1;
+  placed = {};
+  draggedId = null;
+  expandedId = null;
+  sortDone = false;
+  q1Sel = null;
+  q1Attempts = 0;
+  q1Submitted = false;
+  q1LastWrong = null;
+  goToPhase('welcome');
+  renderDevPanel();
+}
+
+
+// ===== SCENARIOS =====
+function renderScenarios() {
+  var html = '';
+  scenariosData.forEach(function(s, i) {
+    if (i < scenariosRevealed) {
+      html += '<div class="scenario-card">' +
+        '<div class="scenario-card-label">' + escHtml(s.label) + '</div>' +
+        '<div class="scenario-card-text">' + escHtml(s.content) + '</div>' +
+        '</div>';
+    } else if (i === scenariosRevealed) {
+      html += '<button class="scenario-reveal-btn" onclick="revealScenario()">Then what happened next &rarr;</button>';
+    } else {
+      html += '<div class="scenario-locked">&middot; &middot; &middot;</div>';
+    }
+  });
+  document.getElementById('scenariosList').innerHTML = html;
+  document.getElementById('scenariosContinue').style.display =
+    (scenariosRevealed >= scenariosData.length) ? 'block' : 'none';
+}
+
+function revealScenario() {
+  playContinueClick();
+  scenariosRevealed++;
+  renderScenarios();
+}
+
+
+// ===== SORT LOGIC =====
+function placeItem(id) {
+  if (sortDone) return;
+  playPlace();
+  placed[id] = true;
+  expandedId = null;
+  renderSort();
+}
+
+function removeItem(id) {
+  if (sortDone) return;
+  playPlace();
+  delete placed[id];
+  renderSort();
+}
+
+function handleDragStart(event, id) {
+  draggedId = id;
+  event.dataTransfer.effectAllowed = 'move';
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  if (draggedId) {
+    placeItem(draggedId);
+    draggedId = null;
+  }
+}
+
+function toggleInfo(id) {
+  expandedId = (expandedId === id) ? null : id;
+  renderSort();
+}
+
+function getPlacedIds() {
+  return Object.keys(placed);
+}
+
+function isSortReady() {
+  var placedIds = getPlacedIds();
+  var personalInBox = placedIds.filter(function(id){
+    var item = allItems.find(function(i){ return i.id === id; });
+    return item && item.zone === 'personal';
+  });
+  var intrudersFound = homeIntruderIds.filter(function(id){ return placed[id]; }).length;
+  var placedShopCount = shopIds.filter(function(id){ return placed[id]; }).length;
+  return personalInBox.length === 0 && intrudersFound >= 2 && placedShopCount >= 5;
+}
+
+function getSortHelper() {
+  var placedIds = getPlacedIds();
+  var personalInBox = placedIds.filter(function(id){
+    var item = allItems.find(function(i){ return i.id === id; });
+    return item && item.zone === 'personal';
+  });
+  var intrudersFound = homeIntruderIds.filter(function(id){ return placed[id]; }).length;
+  var placedShopCount = shopIds.filter(function(id){ return placed[id]; }).length;
+
+  if (personalInBox.length > 0) {
+    var bad = allItems.find(function(i){ return i.id === personalInBox[0]; });
+    return { tone: 'warn', text: '⚠ “' + bad.text + '” is in the tab, but it’s yours — not part of the repair work. Take it back out.' };
+  }
+  if (placedShopCount < 5) {
+    return { tone: 'info', text: 'Keep going — pull the repair things into the tab.' };
+  }
+  if (intrudersFound < 2) {
+    return { tone: 'info', text: 'Some of the repair work is hiding at home, not in the space. (What about the laptop?)' };
+  }
+  return { tone: 'ok', text: '✓ You’ve got the idea — you found the work-stuff at home and left your own things out. “Do the rest” will file the remaining repair things for you.' };
+}
+
+function doTheRest() {
+  if (!isSortReady() || sortDone) return;
+  playContinueClick();
+  shopIds.forEach(function(id){ placed[id] = true; });
+  sortDone = true;
+  playSuccessTone();
+  renderSort();
+}
+
+function renderItemChip(item) {
+  var expanded = (expandedId === item.id);
+  return '<div class="dnd-item-wrap">' +
+    '<div class="dnd-item-row" draggable="true" ondragstart="handleDragStart(event,\'' + item.id + '\')">' +
+      '<div class="dnd-card" style="flex:1;margin-bottom:0;font-size:var(--font-xs);padding:5px 10px;cursor:grab;" onclick="placeItem(\'' + item.id + '\')" title="Add to Things tab">' + escHtml(item.text) + '</div>' +
+      '<button class="dnd-info-btn' + (expanded ? ' open' : '') + '" onclick="toggleInfo(\'' + item.id + '\')" ondragstart="event.stopPropagation()" title="What is this?" aria-label="More info">&#9432;</button>' +
+    '</div>' +
+    (expanded ? '<div class="dnd-info-panel open">' + escHtml(item.info) + '</div>' : '') +
+  '</div>';
+}
+
+function renderSort() {
+  var placedIds = getPlacedIds();
+
+  // Rented-space source panel
+  var rentedHtml = '';
+  rentedSpaceItems.forEach(function(item){
+    if (!placed[item.id]) rentedHtml += renderItemChip(item);
+  });
+  document.getElementById('sourceRented').innerHTML =
+    rentedHtml || '<div class="location-panel-empty">(nothing left here)</div>';
+
+  // Home source panel
+  var homeHtml = '';
+  homeItems.forEach(function(item){
+    if (!placed[item.id]) homeHtml += renderItemChip(item);
+  });
+  document.getElementById('sourceHome').innerHTML =
+    homeHtml || '<div class="location-panel-empty">(nothing left here)</div>';
+
+  // Spreadsheet rows
+  var rowCount = Math.max(6, placedIds.length + 1);
+  var rowsHtml = '';
+  for (var r = 0; r < rowCount; r++) {
+    var id = placedIds[r];
+    var item = id ? allItems.find(function(i){ return i.id === id; }) : null;
+    rowsHtml += '<div class="xl-row">' +
+      '<div class="xl-row-num">' + (r + 1) + '</div>' +
+      '<div class="xl-row-cell">';
+    if (item) {
+      rowsHtml += '<span>' + escHtml(item.text) + '</span>';
+      if (!sortDone) {
+        rowsHtml += '<button class="xl-remove-btn" onclick="removeItem(\'' + item.id + '\')" aria-label="Remove ' + escHtml(item.text) + '">&times;</button>';
+      }
+    } else {
+      rowsHtml += '<span>&nbsp;</span>';
+    }
+    rowsHtml += '</div></div>';
+  }
+  document.getElementById('xlRows').innerHTML = rowsHtml;
+
+  // Drop hint counter
+  var hint = document.getElementById('xlDropHint');
+  if (placedIds.length === 0) {
+    hint.textContent = 'drop here →';
+  } else {
+    hint.textContent = placedIds.length + ' item' + (placedIds.length !== 1 ? 's' : '') + ' placed';
+  }
+
+  // After autocomplete: swap helper to insight + continue
+  if (sortDone) {
+    document.getElementById('sortHelper').className = 'sort-helper ok';
+    document.getElementById('sortHelper').innerHTML =
+      '<strong>✔ Look at what you just did.</strong> You pulled things into that tab from <em>both</em> places — the laptop and the desk came from home, the cash drawer doesn’t repair anything, and your own commuter bike stayed out even though it was in the space. So the tab isn’t “stuff in the space,” and it isn’t “tools.” It’s something else. The next question names it.' +
+      '<div style="margin-top:12px;"><button class="btn-continue" style="width:100%;justify-content:center;" onclick="playContinueClick(); goToPhase(\'reflect\');">Continue →</button></div>';
+    document.getElementById('doTheRestBtn').style.display = 'none';
+    return;
+  }
+
+  // Sort helper message
+  var helper = getSortHelper();
+  var helperEl = document.getElementById('sortHelper');
+  helperEl.className = 'sort-helper ' + helper.tone;
+  helperEl.textContent = helper.text;
+
+  // Do the rest button
+  var btn = document.getElementById('doTheRestBtn');
+  btn.style.display = 'block';
+  var ready = isSortReady();
+  btn.disabled = !ready;
+  var missingShop = shopIds.filter(function(id){ return !placed[id]; });
+  btn.textContent = (missingShop.length > 0 ? 'Do the rest →' : 'Done →');
+  btn.style.opacity = ready ? '1' : '0.55';
+  btn.style.cursor = ready ? 'pointer' : 'not-allowed';
+}
+
+
+// ===== Q1 =====
+function renderQ1() {
+  var html = '';
+  q1Options.forEach(function(o) {
+    var isCorrect = (o.id === Q1_CORRECT);
+    var isSel    = (q1Sel === o.id);
+    var bc, bg;
+    if (q1Submitted && isCorrect) { bc = 'var(--success-border)'; bg = 'var(--success-bg)'; }
+    else if (q1Submitted && isSel) { bc = 'var(--error-border)';   bg = 'var(--error-bg)'; }
+    else if (isSel)               { bc = 'var(--primary)';          bg = 'var(--primary-faint)'; }
+    else                          { bc = 'var(--border)';           bg = 'white'; }
+
+    html += '<div class="mc-opt" onclick="selectQ1(\'' + o.id + '\')"' +
+      ' style="border-color:' + bc + ';background:' + bg + ';cursor:' + (q1Submitted ? 'default' : 'pointer') + ';">' +
+      '<span class="mc-letter">' + o.id.toUpperCase() + '.</span>' +
+      escHtml(o.text) +
+      '</div>';
+  });
+  document.getElementById('q1Opts').innerHTML = html;
+
+  // Correct / revealed feedback
+  var fb = document.getElementById('q1Feedback');
+  if (q1Submitted && q1Sel === Q1_CORRECT && q1Attempts < 3) {
+    fb.className = 'mcq-fb ok show';
+    fb.textContent = '✓ Right.';
+    fb.style.display = 'block';
+  } else if (q1Submitted && q1Attempts >= 3) {
+    fb.className = 'mcq-fb';
+    fb.style.cssText = 'display:block; background:var(--warn-bg); color:var(--warn-text); border:1px solid var(--warn-border);';
+    fb.textContent = 'Here’s what we were looking for: ' + q1FullAnswer;
+  } else {
+    fb.style.display = 'none';
+  }
+
+  // Per-option wrong hint
+  var explainWrap = document.getElementById('q1ExplainWrap');
+  if (q1LastWrong && !q1Submitted && q1OptionFeedback[q1LastWrong]) {
+    document.getElementById('q1Explain').textContent = q1OptionFeedback[q1LastWrong];
+    explainWrap.style.display = 'block';
+  } else {
+    explainWrap.style.display = 'none';
+  }
+
+  // Submit / insight visibility
+  document.getElementById('q1Insight').style.display = q1Submitted ? 'block' : 'none';
+  document.getElementById('q1SubmitWrap').style.display = q1Submitted ? 'none' : 'block';
+  var submitBtn = document.getElementById('q1SubmitBtn');
+  submitBtn.disabled = (q1Sel === null);
+  submitBtn.style.opacity = (q1Sel === null) ? '0.55' : '1';
+  submitBtn.style.cursor  = (q1Sel === null) ? 'not-allowed' : 'pointer';
+}
+
+function selectQ1(id) {
+  if (q1Submitted) return;
+  q1Sel = id;
+  q1LastWrong = null;
+  renderQ1();
+}
+
+function submitQ1() {
+  if (!q1Sel || q1Submitted) return;
+  if (q1Sel === Q1_CORRECT) {
+    playSuccessTone();
+    q1Submitted = true;
+  } else {
+    q1Attempts++;
+    q1LastWrong = q1Sel;
+    if (q1Attempts >= 3) {
+      playBuzzer();
+      q1Sel = Q1_CORRECT;
+      q1Submitted = true;
+    } else {
+      playSoftNope();
+    }
+  }
+  renderQ1();
+}
+
+
+// ===== INIT =====
+// Push activity-specific glossary terms into shared GLOSSARY before renderGlossary()
+var activityGlossaryTerms = [
+  { term: 'The repair work', def: 'The bike-repair activity you do, separate from the rest of your life. We don’t give it a formal name yet — you’ll feel it become its own thing before anyone names it.' },
+  { term: 'Things',          def: 'Plain word for the stuff you have for the repair work. No dollar values yet — those come in 1.2.' },
+  { term: 'A tab',           def: 'A sheet in your spreadsheet. You build your books one tab at a time, starting with the Things tab here.' }
+];
+activityGlossaryTerms.forEach(function(g){ GLOSSARY.push(g); });
+GLOSSARY.sort(function(a, b){ return a.term.localeCompare(b.term); });
+
+renderGlossary();
+applyConfig();
+updateProgress();
+</script>
+</body>
+</html>
