@@ -1,4 +1,9 @@
 Page 2: Make Lists
+
+What you'll discover:
+What should be included into your lists
+Why you need two lists
+
 Scenario: One day, you stand in the middle of the rented space and look around. Most of what you see is for the work, but a few personal things have crept in. Then walk home and look around the apartment. Mostly personal, but some work things have ended up there too. A question comes up to you “what exactly should I include in the shop’s list?”
 
 Activity 1: Sorting things
