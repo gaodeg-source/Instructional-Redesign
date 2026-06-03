@@ -1,48 +1,40 @@
-Page 2: Make Lists
+Page 2: Insurance and Maria
+scenario: You called Citizens Mutual last week about insurance — you didn’t want to be caught flat-footed if something happened. Maria, the agent, is coming by this afternoon to write a policy. She said she’d need to know what’s here. Good thing you started that Things tab.
+
+Image: refer to assets/1.2-table
 
 What you'll discover:
-What should be included into your lists
-Why you need two lists
+Every Thing on your list needs a dollar value — and they don’t all come from the same place.
+Most values you’ll read straight off a receipt; for gear you’ve had a while, you’ll work it out another way.
+By the end, the insurer has her own name for the list.
 
-Scenario: One day, you stand in the middle of the rented space and look around. Most of what you see is for the work, but a few personal things have crept in. Then walk home and look around the apartment. Mostly personal, but some work things have ended up there too. A question comes up to you “what exactly should I include in the shop’s list?”
+Scenario: Thursday, 2pm. The doorbell jingles. Maria walks in with a clipboard.
+Talk: MARIA: “Hi — Maria from Citizens Mutual. Good to meet you. I’ll write you a property policy — I need an inventory of what you have first. Here’s the form. Use your list: drop each thing into the right section, and put a dollar amount on it while you’re there. Most amounts come straight off a receipt; one or two you’ll have to look up.”
 
-Activity 1: Sorting things
-[In this activity, give learners two lists: one is the “At the rented space. Looking around the room from the middle.” This list includes things that mostly shop-related, but a few personal items. The other list is “At home. Looking around the apartment.”This list includes things that mostly personal, but a few shop-related items. There are two bins: Things related to your repair work and Things unrelated to your repair work. Learners need to drag each item from the list to the correct bin. Create 5-10 items in each list. Once learners satisfy the following requirement: at least 6 items in the right bin, at least one item in the shop-related bin, at least one item in the unrelated bin, at least one item whose location didn’t match where it belongs, learners can click the button “help me sort the rest of items” and other items will automatically be sorted to the corresponding bins. Once the automatically sorting finishes, show this as a feedback “You placed maybe a handful; the system did the rest once it had the line. That move — once the rule is clear, the system handles the volume — is what you’re going to feel again and again across this prework.”]
+Scenario: Maria’s form has four sections — Equipment, Computer Equipment, Supplies, Fixtures. Take one item into each section and put a dollar amount on it — open the receipt it came on, or look it up. Once the pattern is clear for all four, you can finish the rest in one go.
 
-Activity 2: MCQ
-Look at what you just did. Your guitar ended up off the list — and the cash drawer ended up on it. You drew a line. Which of these best describes it?
-A.Things related to your repair work
-B.Things you use for repairing bicycles
-C.Things physically in the space
-D.Things the business owns
+Activity 1
+[refer to assets/1.2-activity1-before, there should be 2 distinct lists, one is YOUR THINGS LIST, and the other is INSURABLE PROPERTY. users need to drag the items from YOUR THINGS LIST to INSURABLE PROPERTY list. Then refer to assets/1.2-activity1-middle, the item in the INSURABLE PROPERTY has a receipt or card button, users can click the button to see the receipt or card transactions, and identify the money the item they select cost, and fill in the blank on the right side. Finally after users moved the 4 items from YOUR THINGS LIST to the INSURABLE PROPERTY, some other items automatically appears in INSURABLE PROPERTY in the right category, refer to assets/1.2-activity1-after. Once finished, users receive the feedback"Every line has a number — and you can see where each one came from: a receipt for what you bought, an eBay comp for the gear you’d owned a while, and a shelf count for the supplies."]
 
-Feedback: You drew a line: things related to your repair work go on the list. Things unrelated — even if they’re useful, even if they’re yours — stay off. That line is the most important thing you drew today. Next, you’ll see whether the same line works on a second list — a different kind of list.
+Talk: MARIA: (quietly) “And notice the supplies — you bought $500 of parts, but only $200 is still on the shelf to insure. The rest went into jobs. That gap comes back soon.”
 
-Callout: The line you drew is called the entity boundary. It decides what goes into the accounting records and what stays out. Every time an accountant records something, they have already made a judgment: does this belong to the entity (the shop) or not?
+Button to proceed: Maria reads it back
 
-The boundary isn’t always obvious. If you use your personal car to pick up parts for the shop, did the car cross the boundary for that trip? We’ll handle this with rules later.
+Scenario: By late afternoon the form is done. Maria runs her finger down each column.
 
-Scenario: You’ve listed what you have. But there’s something the list of things doesn’t capture. Last month, a customer paid a deposit for a custom build that isn’t finished yet. Your parts supplier sent a bill you haven’t paid. The landlord expects rent at the end of the week.
+Image: refer to assets/1.2-activity2
 
-These aren’t things you use — they’re promises you’ve agreed to do or pay, where the doing or paying comes later. A complete picture of your shop has two sides: what you have, and what you owe.
+Talk: MARIA
+“OK. Equipment $1,200. Computer equipment $610. Supplies $200. Fixtures $750. Total of$2,760 — what you have on hand now. Property policy goes on that. Paperwork in the mail.”
 
-Activity 3: Drag and Drop
-Three of promises come to mind from the last week or two. Some are related to your repair work; some aren’t. Sort them out.
+Scenario: Maria packs up, hands you a copy of the form, and heads out. The doorbell jingles closed behind her.
 
-Bought parts last week -put them on my credit card.
-Promised to take a friend to dinner -my treat.
-Promised to build a custom frame for Smith. He paid me $220 up front for it.
+Button to proceed: Finish up
 
-Bin 1: Promises related to your repair work
-Bin 2: Promises unrelated to your repair work
+Image: refer to assets/1.2-complete
 
-Activity 4: MCQ
-Two of the three promises ended up on the repair-related list. One didn’t. Now look at what you just did. Which of these best describes what’s on the promises list you kept?
-A.Promises related to your repair work
-B.Promises made to people connected to the business
-C.Promises the business has made
-Feedback for correct answer: Same line, second time. You drew it between things related to your repair work and things unrelated. Now you’ve drawn it again — between promises related to your repair work and promises unrelated. The line is the same. It works in both places.
+Callout: This is the same list of Things from last time — now sorted into categories with a number on every line. But it’s only one slice of it: the part an insurer cares about. Other people will look at the very same list and see something different. The bigger picture it all belongs to is still being built — it’ll have a name by the end of the module.
 
-Rabbit Hole: Why these lists, and not others
+Comming Next: Anna’s stopping by — your friend who kept the books at City Cycle for years. She’ll have her own way of looking at this list, and a couple of names for what’s on it.
 
-You didn’t draw the line for the sake of drawing it. You drew it because the goal was to get your bike repair activities in order — to stop losing track of tools, to know what you owe and to whom, to know what’s at risk. Your guitar, your apartment, the friend dinner — those are real, and they matter in your life. They just don’t help with that goal. There’s no reason to write lists of them now; on these lists, they’d only be a distraction.
+

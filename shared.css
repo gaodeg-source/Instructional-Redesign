@@ -1706,4 +1706,175 @@ body { background: var(--page-bg); font-family: 'Open Sans', sans-serif; color: 
 
   /* Prompt sub-elements */
   .prompt-number { color: var(--accent); }
+
+  /* Source document modal */
+  .source-modal-backdrop { background: rgba(0, 0, 0, 0.55); }
+  .source-modal {
+    background: #32303c;
+    border-color: var(--border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  }
+  .source-modal-close { border-color: var(--border-strong); color: #b0aec0; }
+  .source-modal-close:hover { border-color: var(--primary); color: var(--primary); }
+  .source-modal-badge { background: var(--primary); color: #1b191f; }
+  .source-modal-head { border-bottom-color: var(--border); }
+  .source-modal-stat { background: #3e3c48; border-color: var(--border); }
+  .source-modal-stat.highlight { background: #2a2318; border-color: var(--accent); }
+  .source-modal-stat-label { color: #8a8898; }
+  .source-modal-stat-val { color: #eeebf5; }
+  .source-modal-table { border-color: var(--border); }
+  .source-modal-table .acct-line { color: #b0aec0; border-bottom-color: #2a2830; }
+  .source-modal-table .acct-line.hl-equity { background: rgba(224, 120, 64, 0.15); }
+  .source-modal-ebay-chip { background: #3e3c48; border-color: var(--border); color: #c8ccd8; }
+  .source-modal-ebay-chip.active { background: var(--primary-faint); border-color: var(--primary); color: var(--primary); }
+  .source-modal-note { color: #8a8898; }
+}
+
+/* ===== SOURCE DOCUMENT MODAL (receipt / card / eBay) ===== */
+.source-modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(15, 23, 42, 0.45);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.source-modal-backdrop.show { display: flex; }
+.source-modal {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin: 0;
+  padding: 28px 24px 24px;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+.source-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  line-height: 1;
+  font-size: 20px;
+  border-radius: 6px;
+}
+.source-modal-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: var(--font-xs);
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.source-modal-head {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.source-modal-title {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 4px;
+}
+.source-modal-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: var(--font-s);
+  color: #666;
+  margin-top: 10px;
+}
+.source-modal-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 16px 0;
+}
+@media (max-width: 520px) {
+  .source-modal-stats { grid-template-columns: repeat(2, 1fr); }
+}
+.source-modal-stat {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 8px;
+  text-align: center;
+  background: #fafafa;
+}
+.source-modal-stat.highlight {
+  background: #fffbeb;
+  border-color: #fcd34d;
+}
+.source-modal-stat-label {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #888;
+  margin-bottom: 4px;
+}
+.source-modal-stat-val {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: var(--font-m);
+  font-weight: 700;
+  color: #111;
+}
+.source-modal-table {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 12px 0;
+}
+.source-modal-table .acct-line {
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+.source-modal-table .acct-line:last-child { border-bottom: none; }
+.source-modal-table .acct-total {
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.source-modal-ebay-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+.source-modal-ebay-chip {
+  padding: 8px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: #f8fafc;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: var(--font-m);
+  font-weight: 600;
+  color: #333;
+}
+.source-modal-ebay-chip.active {
+  background: var(--primary-faint);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.source-modal-note {
+  font-family: 'Open Sans', sans-serif;
+  font-size: var(--font-s);
+  color: #666;
+  font-style: italic;
+  line-height: 1.6;
+  margin-top: 12px;
 }
