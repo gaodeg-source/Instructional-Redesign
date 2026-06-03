@@ -316,6 +316,7 @@ var placed = {};       // id -> true (in Things tab)
 var draggedId = null;
 var expandedId = null;
 var sortDone = false;
+var sortRejectMsg = null; // non-null when a personal item was just attempted
 var q1Sel = null;
 var q1Attempts = 0;
 var q1Submitted = false;
@@ -402,6 +403,7 @@ function restartActivity() {
   draggedId = null;
   expandedId = null;
   sortDone = false;
+  sortRejectMsg = null;
   q1Sel = null;
   q1Attempts = 0;
   q1Submitted = false;
@@ -441,8 +443,17 @@ function revealScenario() {
 // ===== SORT LOGIC =====
 function placeItem(id) {
   if (sortDone) return;
+  var item = allItems.find(function(i){ return i.id === id; });
+  if (!item) return;
+  if (item.zone === 'personal') {
+    playSoftNope();
+    sortRejectMsg = '⚠ “' + item.text + '” isn’t part of the repair work — it stays out.';
+    renderSort();
+    return;
+  }
   playPlace();
   placed[id] = true;
+  sortRejectMsg = null;
   expandedId = null;
   renderSort();
 }
@@ -587,11 +598,16 @@ function renderSort() {
     return;
   }
 
-  // Sort helper message
-  var helper = getSortHelper();
+  // Sort helper message — rejection takes priority over progress hints
   var helperEl = document.getElementById('sortHelper');
-  helperEl.className = 'sort-helper ' + helper.tone;
-  helperEl.textContent = helper.text;
+  if (sortRejectMsg) {
+    helperEl.className = 'sort-helper warn';
+    helperEl.textContent = sortRejectMsg;
+  } else {
+    var helper = getSortHelper();
+    helperEl.className = 'sort-helper ' + helper.tone;
+    helperEl.textContent = helper.text;
+  }
 
   // Do the rest button
   var btn = document.getElementById('doTheRestBtn');
